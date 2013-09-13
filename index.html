@@ -1,0 +1,113 @@
+<html>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<style>
+body{
+		color:#959595;
+		background-color:#000;
+		margin:0px;
+		overflow:hidden;
+		font-family:Arial;
+		font-size:14px;
+		background:-webkit-gradient(linear, 0 0, 1 bottom, from(#008FCC), to(#FFF));
+	}
+
+section{ 
+		margin: 320px auto;
+	 	width:100px;
+	  	text-align:center;
+	   	font-size:20px;
+	    height:100px;
+	    box-shadow: 0px 0px 8px #959595;
+		line-height: 100px;
+		border-radius: 60 ;
+		cursor: pointer;
+		z-index: 99;
+		position: absolute;
+		left: 45%;
+		user-select: none;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+
+	 }
+.anim{
+			-webkit-transition: all 500 ease-in 100;
+			-o-transition: all 500 ease-in 100;
+			transition: all 500 ease-in 100; 
+		}
+.active{
+	-webkit-animation-name: BGL;
+	-webkit-animation-duration: 6s;
+  	-webkit-animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes BGL {
+   0% {
+	box-shadow: 0px 0px 8px #FFF;
+   }
+
+   33% {
+	box-shadow: 0px 0px 8px #FFF;
+   }
+
+   66% {
+	box-shadow: 0px 0px 8px #FFF;
+   }
+
+   100% {
+	box-shadow: 0px 0px 8px #FFF;
+   }
+}
+
+.container{
+	height:1px;
+	
+}
+</style>
+
+<head>
+<meta charset="utf-8" />
+    <title>CL-studio</title>
+    <script src="js/ThreeWebGL.js"></script>
+    <script src="js/ThreeExtras.js"></script>
+</head>
+<body>
+ <script id="vs" type="x-shader/x-vertex">
+    varying vec2 vUv;
+    void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+    }
+</script>
+<script id="fs" type="x-shader/x-fragment">
+    uniform sampler2D map;
+    uniform vec3 fogColor;
+    uniform float fogNear;
+    uniform float fogFar;
+    varying vec2 vUv;
+    void main() {
+        float depth = gl_FragCoord.z / gl_FragCoord.w;
+        float fogFactor = smoothstep( fogNear, fogFar, depth );
+        gl_FragColor = texture2D( map, vUv );
+        gl_FragColor.w *= pow( gl_FragCoord.z, 20.0 );
+        gl_FragColor = mix( gl_FragColor, vec4( fogColor, gl_FragColor.w ), fogFactor );
+    }
+</script>
+
+	<div class="container">
+	    <canvas id="panel" width="1" height="1"></canvas>
+	</div>
+	<script type="text/javascript" src="js/script.js"></script>
+ 
+    
+	<section  id="enter" onclick="getIn();">ENTER</section>
+
+</body>
+<script>
+var getIn = function(){
+	window.location.href="index_blog.php";
+}
+
+
+</script>
+</html>
